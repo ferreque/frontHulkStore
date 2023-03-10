@@ -191,12 +191,12 @@ const ModalProducts = ({ show, handleClose, actualizar }) => {
                 required
               >
                 <option defaultValue="">Elige una categoría</option>
-                <option value="6244b8bd4151f9c8eed8ed4f">Comics</option>
-                <option value="6244bb794151f9c8eed8ed63">Accesorios</option>
-                <option value="6244bb424151f9c8eed8ed59">Juguetes</option>
-                <option value="6244bb6b4151f9c8eed8ed5f">Camisetas</option>
-                <option value="6244bb354151f9c8eed8ed55">Vasos</option>
-                <option value="624dae5273efb1b5638bdcb7">Otros</option>
+                <option value="640b2650fefdb4bf3a33c652">Comics</option>
+                <option value="640b266ffefdb4bf3a33c662">Accesorios</option>
+                <option value="640b2675fefdb4bf3a33c666">Juguetes</option>
+                <option value="640b267bfefdb4bf3a33c66a">Camisetas</option>
+                <option value="640b2683fefdb4bf3a33c66e">Vasos</option>
+                <option value="640b2689fefdb4bf3a33c672">Otros</option>
               </select>
             </div>
 

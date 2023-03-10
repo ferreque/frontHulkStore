@@ -84,7 +84,7 @@ const Inicio = () => {
             <a href="/carrito">
               <img
                 className="carrito"
-                src="https://cdn.icon-icons.com/icons2/909/PNG/512/shopping-cart_icon-icons.com_70870.png"
+                src="http://cdn.icon-icons.com/icons2/909/PNG/512/shopping-cart_icon-icons.com_70870.png"
                 alt="carrito"
               />
             </a>

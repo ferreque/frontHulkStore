@@ -1,4 +1,4 @@
-const url = "https://store-hulk.herokuapp.com/api/orders/";
+const url = "http://localhost:8080/api/orders/";
 
 export const getOrders = async () => {
   const respuesta = await fetch(url, {

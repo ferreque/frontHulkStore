@@ -9,9 +9,8 @@ export const HulkNavbar = () => {
     setState(datos.user);
   }, []);
   const cerrarSesion = () => {
+    navigate("/login");
     localStorage.setItem("auth", JSON.stringify(""));
-    const redireccion = () => navigate("../", { replace: true });
-    redireccion();
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">

@@ -1,4 +1,4 @@
-const url = "https://store-hulk.herokuapp.com/api/users/";
+const url = "http://localhost:8080/api/users";
 
 export const getUsers = async () => {
   const respuesta = await fetch(url, {
@@ -25,6 +25,7 @@ export const getUser = async (id) => {
 };
 
 export const postUsers = async (data) => {
+  console.log(JSON.stringify(data));
   const respuesta = await fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
