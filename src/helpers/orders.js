@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/api/orders/";
+const url = "https://hulk-store-back.vercel.app/api/orders/";
 
 export const getOrders = async () => {
   const respuesta = await fetch(url, {

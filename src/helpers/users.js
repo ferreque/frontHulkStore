@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/api/users";
+const url = "https://hulk-store-back.vercel.app/api/users";
 
 export const getUsers = async () => {
   const respuesta = await fetch(url, {

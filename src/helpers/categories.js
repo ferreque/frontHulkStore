@@ -1,4 +1,4 @@
-const url = "http://localhost:8080/api/categories/";
+const url = "https://hulk-store-back.vercel.app/api/categories/";
 
 export const getCategories = async () => {
   const respuesta = await fetch(url, {
