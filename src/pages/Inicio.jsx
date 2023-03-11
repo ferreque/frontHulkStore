@@ -33,62 +33,52 @@ const Inicio = () => {
     <>
       <HulkNavbar />
 
-      <div className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div>
-          <div className="navbar-nav">
-            <a className="nav-link" href="/" role="button">
-              TODOS
-            </a>
-            <a
-              className="nav-link"
-              role="button"
-              onClick={() => filtro("Comics")}
-            >
-              Comics
-            </a>
-            <a
-              className="nav-link"
-              role="button"
-              onClick={() => filtro("Juguetes")}
-            >
-              Juguetes
-            </a>
-            <a
-              className="nav-link"
-              role="button"
-              onClick={() => filtro("Accesorios")}
-            >
-              Accesorios
-            </a>
-            <a
-              className="nav-link"
-              role="button"
-              onClick={() => filtro("Vasos")}
-            >
-              Vasos
-            </a>
-            <a
-              className="nav-link"
-              role="button"
-              onClick={() => filtro("Camisetas")}
-            >
-              Camisetas
-            </a>
-            <a
-              className="nav-link"
-              role="button"
-              onClick={() => filtro("Otros")}
-            >
-              Otros
-            </a>
-            <a href="/carrito">
-              <img
-                className="carrito"
-                src="http://cdn.icon-icons.com/icons2/909/PNG/512/shopping-cart_icon-icons.com_70870.png"
-                alt="carrito"
-              />
-            </a>
-          </div>
+      <div className="d-flex navbar navbar-expand-sm navbar-dark bg-dark justify-content-center">
+        <div className="navbar-nav">
+          <a className="nav-link" href="/" role="button">
+            TODOS
+          </a>
+          <a
+            className="nav-link"
+            role="button"
+            onClick={() => filtro("Comics")}
+          >
+            Comics
+          </a>
+          <a
+            className="nav-link"
+            role="button"
+            onClick={() => filtro("Juguetes")}
+          >
+            Juguetes
+          </a>
+          <a
+            className="nav-link"
+            role="button"
+            onClick={() => filtro("Accesorios")}
+          >
+            Accesorios
+          </a>
+          <a className="nav-link" role="button" onClick={() => filtro("Vasos")}>
+            Vasos
+          </a>
+          <a
+            className="nav-link"
+            role="button"
+            onClick={() => filtro("Camisetas")}
+          >
+            Camisetas
+          </a>
+          <a className="nav-link" role="button" onClick={() => filtro("Otros")}>
+            Otros
+          </a>
+          <a href="/carrito">
+            <img
+              className="carrito"
+              src="http://cdn.icon-icons.com/icons2/909/PNG/512/shopping-cart_icon-icons.com_70870.png"
+              alt="carrito"
+            />
+          </a>
         </div>
       </div>
       <div className="container mb-3">

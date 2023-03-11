@@ -30,7 +30,7 @@ const Carrito = () => {
         setBtnDisable(false);
       }
     });
-    setTimeout(function() {
+    setTimeout(function () {
       setPedidos(pedido);
       setLoadVisible(false);
     }, 2000);

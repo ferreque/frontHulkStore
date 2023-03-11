@@ -75,6 +75,7 @@ const Login = () => {
                   name="email"
                   value={formValue.email}
                   onChange={handleChange}
+                  placeholder="juanperez@gmail.com"
                 />
               </div>
               <div className="form-group mb-3">
@@ -85,6 +86,7 @@ const Login = () => {
                   name="password"
                   value={formValue.password}
                   onChange={handleChange}
+                  placeholder="******"
                 />
               </div>
               <div className="nav-item">

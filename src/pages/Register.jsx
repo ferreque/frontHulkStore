@@ -47,232 +47,124 @@ const Registro = () => {
   };
 
   return (
-    <Container fluid className="background-up">
-      <Row className="">
-        <div className="col d-flex justify-content-center">
-          <h1 className="mt-2 text-white font-weight-bolder">REGISTRO</h1>
+    <Container fluid className="pt-2 background-up">
+      <Form
+        className="border border-warning border-3 rounded card-body bg-light col-8 col-lg-5 mx-auto"
+        onSubmit={handleSubmit}
+      >
+        <div className=" d-flex justify-content-center">
+          <h1 className=" text-black font-weight-bolder">REGISTRO</h1>
         </div>
-      </Row>
-      <Row>
-        <div className="col">
-          <Form
-            className="card-body bg-white col-8 col-lg-5 mx-auto"
-            onSubmit={handleSubmit}
+        <Form.Label>Nombre de Usuario:</Form.Label>
+        <Form.Control
+          name="name"
+          value={formValue.name}
+          onChange={handleChange}
+          required
+          type="text"
+          maxLength={70}
+          placeholder="Juan Perez"
+        />
+
+        <Form.Group className="mb-2" controlId="formBasicEmail">
+          <Form.Label>Escribí tu mail:</Form.Label>
+          <Form.Control
+            name="email"
+            type="email"
+            value={formValue.email}
+            required
+            onChange={handleChange}
+            autoComplete="email"
+            maxLength={50}
+            placeholder="juanperez@gmail.com"
+          />
+        </Form.Group>
+
+        <Form.Group
+          className="mb-2 mx-auto text-dark"
+          controlId="formBasicPassword"
+        >
+          <Form.Label>Contraseña:</Form.Label>
+          <Form.Control
+            name="password"
+            type="password"
+            value={formValue.password}
+            required
+            onChange={handleChange}
+            maxLength={50}
+            placeholder="******"
+          />
+        </Form.Group>
+
+        <Form.Group className="mb-2 mx-auto ">
+          <Form.Label>Confirma tu contraseña:</Form.Label>
+          <Form.Control
+            name="password2"
+            type="password"
+            value={formValue.password2}
+            required
+            onChange={handleChange}
+            maxLength={50}
+            placeholder="******"
+          />
+        </Form.Group>
+        <Form.Label className="">Provincia:</Form.Label>
+        <Form.Control
+          name="province"
+          value={formValue.province}
+          onChange={handleChange}
+          required
+          type="text"
+          maxLength={50}
+          placeholder="Valencia"
+        />
+        <Form.Label className="">Localidad:</Form.Label>
+        <Form.Control
+          name="location"
+          value={formValue.location}
+          onChange={handleChange}
+          required
+          type="text"
+          maxLength={50}
+          placeholder="Ruzafa"
+        />
+        <Form.Label className="">Dirección:</Form.Label>
+        <Form.Control
+          name="shippingAddress"
+          value={formValue.shippingAddress}
+          onChange={handleChange}
+          required
+          type="text"
+          maxLength={50}
+          placeholder="Calle Siempreviva 456"
+        />
+
+        <Form.Group className="mb-2 mx-auto ">
+          <Form.Label>Carga tu foto:</Form.Label>
+          <Form.Control
+            name="img"
+            type="text"
+            value={formValue.img}
+            onChange={handleChange}
+            maxLength={700}
+            placeholder="http://linkdetufoto.com"
+          />
+        </Form.Group>
+        <Row>
+          <Button
+            variant="primary"
+            type="submit"
+            className="mb-2 btn btn-success rounded login-btn col-4 mx-auto"
           >
-            <Form.Label className="">Nombre de Usuario:</Form.Label>
-            <Form.Control
-              name="name"
-              value={formValue.name}
-              onChange={handleChange}
-              required
-              type="text"
-              maxLength={70}
-            />
-
-            <Form.Group className="mb-3 mt-3" controlId="formBasicEmail">
-              <Form.Label className="">Escribí tu mail:</Form.Label>
-              <Form.Control
-                name="email"
-                type="email"
-                value={formValue.email}
-                required
-                onChange={handleChange}
-                autoComplete="email"
-                maxLength={50}
-              />
-            </Form.Group>
-
-            <Form.Group
-              className="mb-3 mx-auto text-dark"
-              controlId="formBasicPassword"
-            >
-              <Form.Label>Contraseña:</Form.Label>
-              <Form.Control
-                name="password"
-                type="password"
-                value={formValue.password}
-                required
-                onChange={handleChange}
-                maxLength={50}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3 mx-auto ">
-              <Form.Label>Confirma tu contraseña:</Form.Label>
-              <Form.Control
-                name="password2"
-                type="password"
-                value={formValue.password2}
-                required
-                onChange={handleChange}
-                maxLength={50}
-              />
-            </Form.Group>
-            <Form.Label className="">Provincia:</Form.Label>
-            <Form.Control
-              name="province"
-              value={formValue.province}
-              onChange={handleChange}
-              required
-              type="text"
-              maxLength={50}
-            />
-            <Form.Label className="">Localidad:</Form.Label>
-            <Form.Control
-              name="location"
-              value={formValue.location}
-              onChange={handleChange}
-              required
-              type="text"
-              maxLength={50}
-            />
-            <Form.Label className="">Dirección:</Form.Label>
-            <Form.Control
-              name="shippingAddress"
-              value={formValue.shippingAddress}
-              onChange={handleChange}
-              required
-              type="text"
-              maxLength={50}
-            />
-
-            <Form.Group className="mb-4 mx-auto ">
-              <Form.Label>Carga tu foto:</Form.Label>
-              <Form.Control
-                name="img"
-                type="text"
-                value={formValue.img}
-                onChange={handleChange}
-                maxLength={700}
-              />
-            </Form.Group>
-            <Row>
-              <Button
-                variant="primary"
-                type="submit"
-                className="mb-3 btn btn-success rounded login-btn col-4 mx-auto"
-              >
-                CREAR CUENTA
-              </Button>
-              <Button className="mb-3 btn btn-success rounded login-btn col-4 mx-auto">
-                <a href="../login" className="text-white">
-                  LOGIN
-                </a>
-              </Button>
-            </Row>
-          </Form>
-        </div>
-      </Row>
-      {/* <Row className="mt-5">
-        <div className="col-lg-12 col-md-6 col-sm-6 mx-auto mt-5 d-flex justify-content-center">
-          <Form
-            className="card-login col-8 col-lg-5 mx-auto  "
-            onSubmit={handleSubmit}
-          >
-            <Form.Label className="text-white">Nombre de Usuario:</Form.Label>
-            <Form.Control
-              name="name"
-              value={formValue.name}
-              onChange={handleChange}
-              required
-              type="text"
-              maxLength={70}
-            />
-
-            <Form.Group className="mb-3 mt-3" controlId="formBasicEmail">
-              <Form.Label className="text-white">Escribí tu mail:</Form.Label>
-              <Form.Control
-                name="email"
-                type="email"
-                value={formValue.email}
-                required
-                onChange={handleChange}
-                autoComplete="email"
-                maxLength={50}
-              />
-            </Form.Group>
-
-            <Form.Group
-              className="mb-3 mx-auto text-dark"
-              controlId="formBasicPassword"
-            >
-              <Form.Label>Contraseña:</Form.Label>
-              <Form.Control
-                name="password"
-                type="password"
-                value={formValue.password}
-                required
-                onChange={handleChange}
-                maxLength={50}
-              />
-            </Form.Group>
-
-            <Form.Group className="mb-3 mx-auto text-dark">
-              <Form.Label>Confirma tu contraseña:</Form.Label>
-              <Form.Control
-                name="password2"
-                type="password"
-                value={formValue.password2}
-                required
-                onChange={handleChange}
-                maxLength={50}
-              />
-            </Form.Group>
-            <Form.Label className="text-dark">Provincia:</Form.Label>
-            <Form.Control
-              name="province"
-              value={formValue.province}
-              onChange={handleChange}
-              required
-              type="text"
-              maxLength={50}
-            />
-            <Form.Label className="text-dark">Localidad:</Form.Label>
-            <Form.Control
-              name="location"
-              value={formValue.location}
-              onChange={handleChange}
-              required
-              type="text"
-              maxLength={50}
-            />
-            <Form.Label className="text-dark">Dirección:</Form.Label>
-            <Form.Control
-              name="shippingAddress"
-              value={formValue.shippingAddress}
-              onChange={handleChange}
-              required
-              type="text"
-              maxLength={50}
-            />
-
-            <Form.Group className="mb-4 mx-auto text-dark">
-              <Form.Label>Carga tu foto:</Form.Label>
-              <Form.Control
-                name="img"
-                type="text"
-                value={formValue.img}
-                onChange={handleChange}
-                maxLength={700}
-              />
-            </Form.Group>
-            <Row>
-              <Button
-                variant="primary"
-                type="submit"
-                className="mb-3 btn btn-success rounded login-btn col-4 mx-auto"
-              >
-                CREAR CUENTA
-              </Button>
-              <Button className="mb-3 btn btn-success rounded login-btn col-4 mx-auto">
-                <a href="../login" className="text-white">
-                  LOGIN
-                </a>
-              </Button>
-            </Row>
-          </Form>
-        </div>
-      </Row> */}
+            CREAR CUENTA
+          </Button>
+          <Button className="mb-2 btn btn-success rounded login-btn col-4 mx-auto">
+            <a href="../login" className="text-white">
+              LOGIN
+            </a>
+          </Button>
+        </Row>
+      </Form>
     </Container>
   );
 };

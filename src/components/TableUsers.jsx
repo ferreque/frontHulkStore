@@ -49,6 +49,7 @@ const TableUsers = () => {
               <tr>
                 <th scope="col">Nombre</th>
                 <th scope="col">Email</th>
+                <th scope="col">Rol</th>
                 <th className="d-flex justify-content-end">
                   <button
                     className="btn btn-success"
@@ -68,6 +69,7 @@ const TableUsers = () => {
                 <tr key={users._id}>
                   <th scope="row">{users.name}</th>
                   <th scope="row">{users.email}</th>
+                  <th scope="row">{users.rol}</th>
                   <td>
                     <button
                       className="btn btn-danger ms-2"
