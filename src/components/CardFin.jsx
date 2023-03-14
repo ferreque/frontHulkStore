@@ -49,7 +49,7 @@ const CardFin = ({ pedidos, setPedidos, btnDisable }) => {
       carrito.forEach((product) => {
         putProducts(product._id, product).then((respuesta) => {
           if (respuesta.errors) {
-            return window.alert(respuesta.errors[0].msg);
+            return mensajeError(respuesta.errors[0].msg);
           }
         });
       });
@@ -58,7 +58,7 @@ const CardFin = ({ pedidos, setPedidos, btnDisable }) => {
     if (stockNegativo !== "si") {
       postOrders(orden).then((respuesta) => {
         if (respuesta.errors) {
-          return window.alert(respuesta.errors[0].msg);
+          return mensajeError(respuesta.errors[0].msg);
         } else {
           mensajeCofirm("Pedido confirmado");
           const redireccion = () => navigate("../", { replace: true });

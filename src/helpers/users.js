@@ -1,4 +1,4 @@
-const url = "https://hulk-store-back.vercel.app/api/users";
+const url = "https://hulk-store-back.vercel.app/api/users/";
 
 export const getUsers = async () => {
   const respuesta = await fetch(url, {
@@ -25,7 +25,6 @@ export const getUser = async (id) => {
 };
 
 export const postUsers = async (data) => {
-  console.log(JSON.stringify(data));
   const respuesta = await fetch(url, {
     method: "POST",
     body: JSON.stringify(data),

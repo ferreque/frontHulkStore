@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getOrders, deleteOrders } from "../helpers/orders";
 import ModalOrders from "../components/modales/ModalOrders";
+import { mensajeCofirm, mensajeValidar } from "../helpers/swal";
 
 const TableOrders = () => {
   const [actualizar, setActualizar] = useState("");
@@ -21,12 +22,14 @@ const TableOrders = () => {
     });
   }, []);
 
-  const borrarOrders = (id) => {
-    let validar = window.confirm(`Esta seguro que desea eliminar el pedido?`);
+  const borrarOrders = async (id) => {
+    let validar = await mensajeValidar(
+      `Esta seguro que desea eliminar el pedido?`
+    );
     if (validar) {
       deleteOrders(id).then((respuesta) => {
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          mensajeCofirm(respuesta.msg);
         }
       });
     }

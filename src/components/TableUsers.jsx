@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getUsers, deleteUsers } from "../helpers/users";
 import ModalUsers from "../components/modales/ModalUsers";
+import { mensajeCofirm, mensajeValidar } from "../helpers/swal";
 
 const TableUsers = () => {
   const [actualizar, setActualizar] = useState("");
@@ -21,17 +22,19 @@ const TableUsers = () => {
     });
   }, []);
 
-  const borrarUser = (id) => {
+  const borrarUser = async (id) => {
     let usuario = users.datos.find((user) => {
       return user._id === id;
     });
-    let validar = window.confirm(
-      `Esta seguro que desea eliminar al usuario ${usuario.name}?`
+    let validar = await mensajeValidar(
+      `Esta seguro que desea eliminar al usuario ${usuario.name}?`,
+      "No podrá revertir esta decisión"
     );
+
     if (validar) {
       deleteUsers(id).then((respuesta) => {
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          mensajeCofirm(respuesta.msg);
         }
       });
     }

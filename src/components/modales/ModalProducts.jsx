@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { getProduct, postProducts, putProducts } from "../../helpers/products";
 import { getCategories } from "../../helpers/categories";
+import { mensajeCofirm, mensajeError } from "../../helpers/swal";
 
 const ModalProducts = ({ show, handleClose, actualizar }) => {
   const [loading, setLoading] = useState(false);
@@ -74,10 +75,10 @@ const ModalProducts = ({ show, handleClose, actualizar }) => {
       putProducts(actualizar, formValue).then((respuesta) => {
         if (respuesta.errors) {
           setLoading(false);
-          return window.alert(respuesta.errors[0].msg);
+          return mensajeError(respuesta.errors[0].msg);
         }
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          mensajeCofirm(respuesta.msg);
         }
         setLoading(false);
         setFormValue({
@@ -96,10 +97,10 @@ const ModalProducts = ({ show, handleClose, actualizar }) => {
       postProducts(formValue).then((respuesta) => {
         if (respuesta.errors) {
           setLoading(false);
-          return window.alert(respuesta.errors[0].msg);
+          return mensajeError(respuesta.errors[0].msg);
         }
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          mensajeCofirm(respuesta.msg);
         }
         setLoading(false);
         setFormValue({

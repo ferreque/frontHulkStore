@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { postUsers } from "../../helpers/users";
 import { Modal, Button } from "react-bootstrap";
+import { mensajeCofirm, mensajeError } from "../../helpers/swal";
+
 const ModalUser = ({ show, handleClose }) => {
   const [loading, setLoading] = useState(false);
   const [formValue, setFormValue] = useState({
@@ -28,7 +30,7 @@ const ModalUser = ({ show, handleClose }) => {
     postUsers(formValue).then((respuesta) => {
       if (respuesta.errors) {
         setLoading(false);
-        return window.alert(respuesta.errors[0].msg);
+        return mensajeError(respuesta.errors[0].msg);
       }
       setLoading(false);
       setFormValue({

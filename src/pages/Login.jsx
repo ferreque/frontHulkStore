@@ -21,6 +21,9 @@ const Login = () => {
   }, [login, navigate]);
 
   useEffect(() => {
+    window.alert(
+      "Ecommerce prueba. Para ingresar como admin: admin@admin.com pass: 123456, como usuario user@user.com pass: 123456"
+    );
     return () => {
       isMounted.current = false;
     };

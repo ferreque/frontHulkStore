@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getCategories, deleteCategories } from "../helpers/categories";
 import ModalCategories from "../components/modales/ModalCategories";
+import { mensajeCofirm, mensajeValidar } from "../helpers/swal";
 
 const TableCategories = () => {
   const [actualizar, setActualizar] = useState("");
@@ -21,17 +22,17 @@ const TableCategories = () => {
     });
   }, []);
 
-  const borrarCategories = (id) => {
+  const borrarCategories = async (id) => {
     let categ = categories.datos.find((categorie) => {
       return categorie._id === id;
     });
-    let validar = window.confirm(
+    let validar = await mensajeValidar(
       `Esta seguro que desea eliminar la categoría ${categ.name}?`
     );
     if (validar) {
       deleteCategories(id).then((respuesta) => {
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          mensajeCofirm(respuesta.msg);
         }
       });
     }

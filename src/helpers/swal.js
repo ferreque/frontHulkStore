@@ -15,3 +15,19 @@ export const mensajeError = (mensaje) => {
     cancelButtonColor: "#d33",
   });
 };
+
+export const mensajeValidar = (mensaje, text) => {
+  return new Promise((resolve) => {
+    Swal.fire({
+      title: mensaje,
+      text,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, eliminar!",
+    }).then((result) => {
+      resolve(result.isConfirmed);
+    });
+  });
+};

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { getOrder, postOrders, putOrders } from "../../helpers/orders";
 import { getProducts } from "../../helpers/products";
+import { mensajeCofirm, mensajeError } from "../../helpers/swal";
 
 const ModalOrders = ({ show, handleClose, actualizar }) => {
   let listCarrito = [];
@@ -75,10 +76,10 @@ const ModalOrders = ({ show, handleClose, actualizar }) => {
       putOrders(actualizar, formValue).then((respuesta) => {
         if (respuesta.errors) {
           setLoading(false);
-          return window.alert(respuesta.errors[0].msg);
+          return mensajeError(respuesta.errors[0].msg);
         }
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          mensajeCofirm(respuesta.msg);
         }
         setLoading(false);
         setFormValue({
@@ -96,10 +97,10 @@ const ModalOrders = ({ show, handleClose, actualizar }) => {
       postOrders(formValue).then((respuesta) => {
         if (respuesta.errors) {
           setLoading(false);
-          return window.alert(respuesta.errors[0].msg);
+          return mensajeError(respuesta.errors[0].msg);
         }
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          mensajeCofirm(respuesta.msg);
         }
         setLoading(false);
         setFormValue({

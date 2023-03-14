@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getProducts, deleteProducts } from "../helpers/products";
 import ModalProducts from "../components/modales/ModalProducts";
+import { mensajeCofirm, mensajeValidar } from "../helpers/swal";
 
 const TableProducts = () => {
   const [actualizar, setActualizar] = useState("");
@@ -21,17 +22,17 @@ const TableProducts = () => {
     });
   }, []);
 
-  const borrarProducts = (id) => {
+  const borrarProducts = async (id) => {
     let prod = products.datos.find((product) => {
       return product._id === id;
     });
-    let validar = window.confirm(
+    let validar = await mensajeValidar(
       `Esta seguro que desea eliminar el producto ${prod.name}?`
     );
     if (validar) {
       deleteProducts(id).then((respuesta) => {
         if (respuesta.msg) {
-          window.alert(respuesta.msg);
+          mensajeCofirm(respuesta.msg);
         }
       });
     }
