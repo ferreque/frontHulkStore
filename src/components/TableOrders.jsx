@@ -20,7 +20,7 @@ const TableOrders = () => {
         loading: false,
       });
     });
-  }, []);
+  });
 
   const borrarOrders = async (id) => {
     let validar = await mensajeValidar(
@@ -105,7 +105,6 @@ const TableOrders = () => {
           </table>
           <div className="d-flex justify-content-center">
             <ModalOrders
-              orders={orders}
               show={show}
               handleClose={handleClose}
               actualizar={actualizar}

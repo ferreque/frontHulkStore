@@ -20,7 +20,7 @@ const TableProducts = () => {
         loading: false,
       });
     });
-  }, []);
+  });
 
   const borrarProducts = async (id) => {
     let prod = products.datos.find((product) => {

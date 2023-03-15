@@ -68,7 +68,6 @@ const ModalProducts = ({ show, handleClose, actualizar }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setLoading(true);
 
     if (actualizar) {
@@ -81,16 +80,6 @@ const ModalProducts = ({ show, handleClose, actualizar }) => {
           mensajeCofirm(respuesta.msg);
         }
         setLoading(false);
-        setFormValue({
-          contador: 0,
-          name: "",
-          price: "",
-          description: "",
-          categorie: "",
-          imagen: "",
-          available: true,
-          stock: "",
-        });
         handleClose();
       });
     } else {
@@ -103,16 +92,6 @@ const ModalProducts = ({ show, handleClose, actualizar }) => {
           mensajeCofirm(respuesta.msg);
         }
         setLoading(false);
-        setFormValue({
-          contador: 0,
-          name: "",
-          price: "",
-          description: "",
-          categorie: "",
-          imagen: "",
-          available: true,
-          stock: "",
-        });
 
         handleClose();
       });

@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { getOrder, postOrders, putOrders } from "../../helpers/orders";
-import { getProducts } from "../../helpers/products";
 import { mensajeCofirm, mensajeError } from "../../helpers/swal";
 
 const ModalOrders = ({ show, handleClose, actualizar }) => {
-  let listCarrito = [];
   const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState([]);
   const [formValue, setFormValue] = useState({
-    products: "",
     totalPrice: "",
     status: "",
     shippingAddress: "",
@@ -19,14 +15,7 @@ const ModalOrders = ({ show, handleClose, actualizar }) => {
   });
 
   useEffect(() => {
-    getProducts().then((respuesta) => {
-      setProducts(respuesta.products);
-    });
-  }, []);
-
-  useEffect(() => {
     setFormValue({
-      products: "",
       totalPrice: "",
       status: "",
       shippingAddress: "",
@@ -36,12 +25,7 @@ const ModalOrders = ({ show, handleClose, actualizar }) => {
     });
     if (actualizar) {
       getOrder(actualizar).then((respuesta) => {
-        respuesta.order.products.forEach((element) => {
-          listCarrito.push(element.name);
-        });
-
         setFormValue({
-          products: listCarrito,
           totalPrice: respuesta.order.totalPrice,
           status: respuesta.order.status,
           shippingAddress: respuesta.order.shippingAddress,
@@ -82,15 +66,6 @@ const ModalOrders = ({ show, handleClose, actualizar }) => {
           mensajeCofirm(respuesta.msg);
         }
         setLoading(false);
-        setFormValue({
-          products: "",
-          totalPrice: "",
-          status: "",
-          shippingAddress: "",
-          location: "",
-          province: "",
-          activeOrder: true,
-        });
         handleClose();
       });
     } else {
@@ -104,7 +79,6 @@ const ModalOrders = ({ show, handleClose, actualizar }) => {
         }
         setLoading(false);
         setFormValue({
-          products: "",
           totalPrice: "",
           status: "",
           shippingAddress: "",
@@ -129,7 +103,7 @@ const ModalOrders = ({ show, handleClose, actualizar }) => {
           <Modal.Body>
             <div className="form-group">
               <label>Productos en carrito</label>
-              <h5>{formValue.products}</h5>
+              <h5></h5>
             </div>
             <div className="form-group">
               <label>Provincia</label>

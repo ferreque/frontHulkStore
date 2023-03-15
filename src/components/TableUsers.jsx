@@ -20,7 +20,7 @@ const TableUsers = () => {
         loading: false,
       });
     });
-  }, []);
+  });
 
   const borrarUser = async (id) => {
     let usuario = users.datos.find((user) => {
