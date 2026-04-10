@@ -1,99 +1,105 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getUsers, deleteUsers } from "../helpers/users";
 import ModalUsers from "../components/modales/ModalUsers";
 import { mensajeCofirm, mensajeValidar } from "../helpers/swal";
+import { FaUserPlus, FaTrash } from "react-icons/fa";
 
 const TableUsers = () => {
-  const [actualizar, setActualizar] = useState("");
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [users, setUsers] = useState({
-    datos: [],
-    loading: true,
-  });
+  const [users, setUsers] = useState({ datos: [], loading: true });
 
   useEffect(() => {
     getUsers().then((respuesta) => {
-      setUsers({
-        datos: respuesta.users,
-        loading: false,
-      });
+      setUsers({ datos: respuesta.users, loading: false });
     });
-  });
+  }, []);
 
   const borrarUser = async (id) => {
-    let usuario = users.datos.find((user) => {
-      return user._id === id;
-    });
-    let validar = await mensajeValidar(
-      `Esta seguro que desea eliminar al usuario ${usuario.name}?`,
+    const usuario = users.datos.find((u) => u._id === id);
+    const validar = await mensajeValidar(
+      `¿Eliminar al usuario ${usuario.name}?`,
       "No podrá revertir esta decisión"
     );
-
     if (validar) {
-      deleteUsers(id).then((respuesta) => {
-        if (respuesta.msg) {
-          mensajeCofirm(respuesta.msg);
+      deleteUsers(id).then((res) => {
+        if (res.msg) {
+          mensajeCofirm(res.msg);
+          setUsers((prev) => ({
+            ...prev,
+            datos: prev.datos.filter((u) => u._id !== id),
+          }));
         }
       });
     }
   };
+
+  if (users.loading) {
+    return (
+      <div className="text-zinc-500 text-sm py-4 text-center animate-pulse">
+        Cargando...
+      </div>
+    );
+  }
+
   return (
     <>
-      {users.loading ? (
-        <div className="alert alert-success text-center" role="alert">
-          Cargando...
-        </div>
-      ) : (
-        <div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Email</th>
-                <th scope="col">Rol</th>
-                <th className="d-flex justify-content-end">
-                  <button
-                    className="btn btn-success"
-                    onClick={() => {
-                      setActualizar("");
-                      handleShow();
-                    }}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-zinc-800">
+              <th className="text-left text-xs text-zinc-500 uppercase tracking-wider py-2 pr-4">
+                Nombre
+              </th>
+              <th className="text-left text-xs text-zinc-500 uppercase tracking-wider py-2 pr-4">
+                Email
+              </th>
+              <th className="text-left text-xs text-zinc-500 uppercase tracking-wider py-2 pr-4">
+                Rol
+              </th>
+              <th className="text-right py-2">
+                <button
+                  onClick={() => setShow(true)}
+                  className="bg-green-600 hover:bg-green-500 text-white p-1.5 rounded-lg transition-colors"
+                  title="Nuevo usuario"
+                >
+                  <FaUserPlus size={13} />
+                </button>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.datos.map((user) => (
+              <tr
+                key={user._id}
+                className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors"
+              >
+                <td className="py-2.5 pr-4 text-zinc-200">{user.name}</td>
+                <td className="py-2.5 pr-4 text-zinc-400 text-xs">{user.email}</td>
+                <td className="py-2.5 pr-4">
+                  <span
+                    className={`text-xs px-2 py-0.5 rounded-full ${
+                      user.rol === "ADMIN_ROLE"
+                        ? "bg-green-900/50 text-green-400"
+                        : "bg-zinc-800 text-zinc-500"
+                    }`}
                   >
-                    <i className="fa fa-user-plus" aria-hidden="true"></i>
+                    {user.rol === "ADMIN_ROLE" ? "Admin" : "Usuario"}
+                  </span>
+                </td>
+                <td className="py-2.5 text-right">
+                  <button
+                    onClick={() => borrarUser(user._id)}
+                    className="text-zinc-600 hover:text-red-400 transition-colors p-1"
+                  >
+                    <FaTrash size={12} />
                   </button>
-                </th>
-                <th></th>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {users.datos.map((users) => (
-                <tr key={users._id}>
-                  <th scope="row">{users.name}</th>
-                  <th scope="row">{users.email}</th>
-                  <th scope="row">{users.rol}</th>
-                  <td>
-                    <button
-                      className="btn btn-danger ms-2"
-                      onClick={() => borrarUser(users._id)}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="d-flex justify-content-center">
-            <ModalUsers
-              show={show}
-              handleClose={handleClose}
-              actualizar={actualizar}
-            />
-          </div>
-        </div>
-      )}
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ModalUsers show={show} handleClose={() => setShow(false)} />
     </>
   );
 };

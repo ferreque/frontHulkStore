@@ -1,117 +1,108 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getOrders, deleteOrders } from "../helpers/orders";
 import ModalOrders from "../components/modales/ModalOrders";
 import { mensajeCofirm, mensajeValidar } from "../helpers/swal";
+import { FaEdit, FaTrash } from "react-icons/fa";
+
+const statusColor = {
+  PENDIENTE: "bg-amber-900/50 text-amber-400",
+  ENVIADO: "bg-blue-900/50 text-blue-400",
+  ENTREGADO: "bg-green-900/50 text-green-400",
+};
 
 const TableOrders = () => {
   const [actualizar, setActualizar] = useState("");
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  const [orders, setOrders] = useState({
-    datos: [],
-    loading: true,
-  });
+  const [orders, setOrders] = useState({ datos: [], loading: true });
 
   useEffect(() => {
     getOrders().then((respuesta) => {
-      setOrders({
-        datos: respuesta.orders,
-        loading: false,
-      });
+      setOrders({ datos: respuesta.orders, loading: false });
     });
-  });
+  }, []);
 
-  const borrarOrders = async (id) => {
-    let validar = await mensajeValidar(
-      `Esta seguro que desea eliminar el pedido?`
-    );
+  const borrarOrder = async (id) => {
+    const validar = await mensajeValidar("¿Eliminar este pedido?");
     if (validar) {
-      deleteOrders(id).then((respuesta) => {
-        if (respuesta.msg) {
-          mensajeCofirm(respuesta.msg);
+      deleteOrders(id).then((res) => {
+        if (res.msg) {
+          mensajeCofirm(res.msg);
+          setOrders((prev) => ({
+            ...prev,
+            datos: prev.datos.filter((o) => o._id !== id),
+          }));
         }
       });
     }
   };
+
+  if (orders.loading) {
+    return (
+      <div className="text-zinc-500 text-sm py-4 text-center animate-pulse">
+        Cargando...
+      </div>
+    );
+  }
+
   return (
     <>
-      {orders.loading ? (
-        <div className="alert alert-success text-center" role="alert">
-          Cargando...
-        </div>
-      ) : (
-        <div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Estado</th>
-                <th scope="col">Productos/Cantidad</th>
-                <th scope="col">Provincia</th>
-                <th scope="col">Localidad</th>
-                <th scope="col">Dirección</th>
-                <th scope="col">Precio Total</th>
-                <th className="d-flex justify-content-end">
-                  <button
-                    className="btn btn-success"
-                    onClick={() => {
-                      setActualizar("");
-                      handleShow();
-                    }}
-                  >
-                    <i className="fa fa-user-plus" aria-hidden="true"></i>
-                  </button>
-                </th>
-                <th></th>
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-zinc-800">
+              <th className="text-left text-xs text-zinc-500 uppercase tracking-wider py-2 pr-4">Estado</th>
+              <th className="text-left text-xs text-zinc-500 uppercase tracking-wider py-2 pr-4">Productos</th>
+              <th className="text-left text-xs text-zinc-500 uppercase tracking-wider py-2 pr-4">Dirección</th>
+              <th className="text-left text-xs text-zinc-500 uppercase tracking-wider py-2 pr-4">Total</th>
+              <th className="py-2" />
+            </tr>
+          </thead>
+          <tbody>
+            {orders.datos.map((order) => (
+              <tr
+                key={order._id}
+                className="border-b border-zinc-800/50 hover:bg-zinc-800/30 transition-colors"
+              >
+                <td className="py-2.5 pr-4">
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${statusColor[order.status] || "bg-zinc-800 text-zinc-500"}`}>
+                    {order.status}
+                  </span>
+                </td>
+                <td className="py-2.5 pr-4 text-zinc-400 text-xs">
+                  {order.products?.map((p) => `${p.name} ×${p.amount}`).join(", ")}
+                </td>
+                <td className="py-2.5 pr-4 text-zinc-500 text-xs">
+                  {order.shippingAddress}, {order.location}
+                </td>
+                <td className="py-2.5 pr-4 text-green-400 font-medium">
+                  ${order.totalPrice}
+                </td>
+                <td className="py-2.5 text-right">
+                  <div className="flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => { setActualizar(order._id); setShow(true); }}
+                      className="text-zinc-600 hover:text-amber-400 transition-colors p-1"
+                    >
+                      <FaEdit size={13} />
+                    </button>
+                    <button
+                      onClick={() => borrarOrder(order._id)}
+                      className="text-zinc-600 hover:text-red-400 transition-colors p-1"
+                    >
+                      <FaTrash size={12} />
+                    </button>
+                  </div>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {orders.datos.map((order) => (
-                <tr key={order._id}>
-                  <th scope="row">{order.status}</th>
-                  {order.products.map((producto) => (
-                    <tr key={producto._id} className="font-weight-bold">
-                      <th>{producto.name}</th>
-                      <th>{producto.amount}</th>
-                    </tr>
-                  ))}
-                  <th scope="row">{order.province}</th>
-                  <th scope="row">{order.location}</th>
-                  <th scope="row">{order.shippingAddress}</th>
-                  <th scope="row">{order.totalPrice}</th>
-                  <td>
-                    <button
-                      className="btn btn-warning ms-2"
-                      onClick={() => {
-                        setActualizar(order._id);
-                        handleShow();
-                      }}
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </button>
-                    <button
-                      className="btn btn-danger ms-2"
-                      onClick={() => borrarOrders(order._id)}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="d-flex justify-content-center">
-            <ModalOrders
-              show={show}
-              handleClose={handleClose}
-              actualizar={actualizar}
-            />
-          </div>
-        </div>
-      )}
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ModalOrders
+        show={show}
+        handleClose={() => setShow(false)}
+        actualizar={actualizar}
+      />
     </>
   );
 };

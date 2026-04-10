@@ -1,11 +1,15 @@
-const url = "https://hulk-store-back.vercel.app/api/orders/";
+import { useAuthStore } from '../store/authStore';
+
+const url = `${import.meta.env.VITE_BACKEND_URL}orders/`;
+
+const getToken = () => useAuthStore.getState().token;
 
 export const getOrders = async () => {
   const respuesta = await fetch(url, {
     method: "GET",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
@@ -17,7 +21,7 @@ export const getOrder = async (id) => {
     method: "GET",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
@@ -30,11 +34,10 @@ export const postOrders = async (data) => {
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };
 
@@ -44,11 +47,10 @@ export const putOrders = async (id, data) => {
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };
 
@@ -57,10 +59,9 @@ export const deleteOrders = async (id) => {
     method: "DELETE",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };

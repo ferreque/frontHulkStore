@@ -1,11 +1,15 @@
-const url = "https://hulk-store-back.vercel.app/api/users/";
+import { useAuthStore } from '../store/authStore';
+
+const url = `${import.meta.env.VITE_BACKEND_URL}users/`;
+
+const getToken = () => useAuthStore.getState().token;
 
 export const getUsers = async () => {
   const respuesta = await fetch(url, {
     method: "GET",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
@@ -17,7 +21,7 @@ export const getUser = async (id) => {
     method: "GET",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
@@ -33,7 +37,6 @@ export const postUsers = async (data) => {
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };
 
@@ -43,11 +46,10 @@ export const putUsers = async (id, data) => {
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };
 
@@ -56,10 +58,9 @@ export const deleteUsers = async (id) => {
     method: "DELETE",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };

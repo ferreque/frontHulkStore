@@ -1,105 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { getCategories, deleteCategories } from "../helpers/categories";
-import ModalCategories from "../components/modales/ModalCategories";
-import { mensajeCofirm, mensajeValidar } from "../helpers/swal";
+import { useState, useEffect } from "react";
+import { getCategories } from "../helpers/categories";
 
 const TableCategories = () => {
-  // const [actualizar, setActualizar] = useState("");
-  const [categories, setCategories] = useState({
-    datos: [],
-    loading: true,
-  });
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [categories, setCategories] = useState({ datos: [], loading: true });
 
   useEffect(() => {
     getCategories().then((respuesta) => {
-      setCategories({
-        datos: respuesta.categories,
-        loading: false,
-      });
+      setCategories({ datos: respuesta.categories, loading: false });
     });
   }, []);
 
-  // const borrarCategories = async (id) => {
-  //   let categ = categories.datos.find((categorie) => {
-  //     return categorie._id === id;
-  //   });
-  //   let validar = await mensajeValidar(
-  //     `Esta seguro que desea eliminar la categoría ${categ.name}?`
-  //   );
-  //   if (validar) {
-  //     deleteCategories(id).then((respuesta) => {
-  //       if (respuesta.msg) {
-  //         mensajeCofirm(respuesta.msg);
-  //       }
-  //     });
-  //   }
-  // };
+  if (categories.loading) {
+    return (
+      <div className="text-zinc-500 text-sm py-4 text-center animate-pulse">
+        Cargando...
+      </div>
+    );
+  }
+
   return (
-    <>
-      {categories.loading ? (
-        <div className="alert alert-success text-center" role="alert">
-          Cargando...
+    <div className="space-y-2">
+      {categories.datos.map((cat) => (
+        <div
+          key={cat._id}
+          className="flex items-center gap-2 py-2 border-b border-zinc-800/50"
+        >
+          <span className="w-2 h-2 rounded-full bg-green-500 shrink-0" />
+          <span className="text-zinc-300 text-sm">{cat.name}</span>
         </div>
-      ) : (
-        <div>
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col">Nombre</th>
-                {/*  <th className="d-flex justify-content-end">
-                   <button
-                    className="btn btn-success"
-                    onClick={() => {
-                      setActualizar("");
-                      handleShow();
-                    }}
-                  >
-                    <i className="fa fa-user-plus" aria-hidden="true"></i>
-                  </button> 
-                </th>*/}
-              </tr>
-            </thead>
-            <tbody>
-              {categories.datos.map((categorie) => (
-                <tr key={categorie._id}>
-                  <th scope="row">{categorie.name}</th>
-                  <td>
-                    {/* <button
-                      className="btn btn-warning ms-2"
-                      onClick={() => {
-                        setActualizar(categorie._id);
-                        handleShow();
-                      }}
-                    >
-                      <i
-                        className="fa fa-pencil-square-o"
-                        aria-hidden="true"
-                      ></i>
-                    </button>
-                    <button
-                      className="btn btn-danger ms-2"
-                      onClick={() => borrarCategories(categorie._id)}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true"></i>
-                    </button> */}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="d-flex justify-content-center">
-            {/* <ModalCategories
-              show={show}
-              handleClose={handleClose}
-              actualizar={actualizar}
-            /> */}
-          </div>
-        </div>
-      )}
-    </>
+      ))}
+    </div>
   );
 };
 

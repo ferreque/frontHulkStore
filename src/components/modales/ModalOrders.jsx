@@ -1,202 +1,123 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import Modal from "../common/Modal";
 import { getOrder, postOrders, putOrders } from "../../helpers/orders";
 import { mensajeCofirm, mensajeError } from "../../helpers/swal";
 
+const inputClass =
+  "w-full bg-zinc-800 border border-zinc-700 rounded-xl px-3 py-2.5 text-white placeholder-zinc-600 focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500/20 transition-all text-sm";
+const labelClass = "block text-xs font-medium text-zinc-400 mb-1";
+
+const emptyForm = {
+  totalPrice: "", status: "", shippingAddress: "",
+  location: "", province: "", activeOrder: true,
+};
+
 const ModalOrders = ({ show, handleClose, actualizar }) => {
   const [loading, setLoading] = useState(false);
-  const [formValue, setFormValue] = useState({
-    totalPrice: "",
-    status: "",
-    shippingAddress: "",
-    location: "",
-    province: "",
-    activeOrder: true,
-  });
+  const [formValue, setFormValue] = useState(emptyForm);
 
   useEffect(() => {
-    setFormValue({
-      totalPrice: "",
-      status: "",
-      shippingAddress: "",
-      location: "",
-      province: "",
-      activeOrder: true,
-    });
+    setFormValue(emptyForm);
     if (actualizar) {
-      getOrder(actualizar).then((respuesta) => {
+      getOrder(actualizar).then((res) => {
+        const o = res.order;
         setFormValue({
-          totalPrice: respuesta.order.totalPrice,
-          status: respuesta.order.status,
-          shippingAddress: respuesta.order.shippingAddress,
-          location: respuesta.order.location,
-          province: respuesta.order.province,
-          activeOrder: respuesta.order.activeOrder,
+          totalPrice: o.totalPrice, status: o.status,
+          shippingAddress: o.shippingAddress, location: o.location,
+          province: o.province, activeOrder: o.activeOrder,
         });
       });
     }
   }, [actualizar]);
 
   const handleChange = ({ target }) => {
-    if (target.name === "activeOrder") {
-      setFormValue({
-        ...formValue,
-        [target.name]: target.checked,
-      });
-    } else {
-      setFormValue({
-        ...formValue,
-        [target.name]: target.value,
-      });
-    }
+    setFormValue({
+      ...formValue,
+      [target.name]: target.name === "activeOrder" ? target.checked : target.value,
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setLoading(true);
+    const action = actualizar
+      ? putOrders(actualizar, formValue)
+      : postOrders(formValue);
 
-    if (actualizar) {
-      putOrders(actualizar, formValue).then((respuesta) => {
-        if (respuesta.errors) {
-          setLoading(false);
-          return mensajeError(respuesta.errors[0].msg);
-        }
-        if (respuesta.msg) {
-          mensajeCofirm(respuesta.msg);
-        }
-        setLoading(false);
-        handleClose();
-      });
-    } else {
-      postOrders(formValue).then((respuesta) => {
-        if (respuesta.errors) {
-          setLoading(false);
-          return mensajeError(respuesta.errors[0].msg);
-        }
-        if (respuesta.msg) {
-          mensajeCofirm(respuesta.msg);
-        }
-        setLoading(false);
-        setFormValue({
-          totalPrice: "",
-          status: "",
-          shippingAddress: "",
-          location: "",
-          province: "",
-          activeOrder: true,
-        });
-        handleClose();
-      });
-    }
+    action.then((res) => {
+      setLoading(false);
+      if (res.errors) return mensajeError(res.errors[0].msg);
+      if (res.msg) mensajeCofirm(res.msg);
+      if (!actualizar) setFormValue(emptyForm);
+      handleClose();
+    });
   };
 
   return (
-    <div>
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {actualizar ? "Modificar orden" : "Nueva orden"}
-          </Modal.Title>
-        </Modal.Header>
-        <form onSubmit={handleSubmit}>
-          <Modal.Body>
-            <div className="form-group">
-              <label>Productos en carrito</label>
-              <h5></h5>
-            </div>
-            <div className="form-group">
-              <label>Provincia</label>
-              <input
-                type="text"
-                name="province"
-                className="form-control"
-                required
-                value={formValue.province}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Localidad</label>
-              <input
-                type="text"
-                name="location"
-                className="form-control"
-                required
-                value={formValue.location}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Direccion de envio</label>
-              <input
-                type="text"
-                name="shippingAddress"
-                className="form-control"
-                required
-                value={formValue.shippingAddress}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Precio Total $</label>
-              <input
-                type="number"
-                name="totalPrice"
-                className="form-control"
-                value={formValue.totalPrice}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Descripción</label>
-              <textarea
-                type="text"
-                name="description"
-                className="form-control"
-                value={formValue.description}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="form-group">
-              <label>Estado</label>
-              <select
-                className="form-select"
-                name="status"
-                aria-label="Default select example"
-                value={formValue.status}
-                onChange={handleChange}
-                required
-              >
-                <option defaultValue="">Estado del pedido</option>
-                <option value="PENDIENTE">Pendiente</option>
-                <option value="ENVIADO">Enviado</option>
-                <option value="ENTREGADO">Entregado</option>
-              </select>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="checkbox"
-                checked={formValue.activeOrder}
-                value={formValue.activeOrder}
-                onChange={handleChange}
-                name="activeOrder"
-              />
-              <label>Pedido Activo</label>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="success" type="submit" disabled={loading}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </form>
-      </Modal>
-    </div>
+    <Modal
+      show={show}
+      onClose={handleClose}
+      title={actualizar ? "Editar pedido" : "Nuevo pedido"}
+      footer={
+        <>
+          <button
+            type="button"
+            onClick={handleClose}
+            className="px-4 py-2 text-sm rounded-xl border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 transition-all"
+          >
+            Cancelar
+          </button>
+          <button
+            form="form-orders"
+            type="submit"
+            disabled={loading}
+            className="px-4 py-2 text-sm rounded-xl bg-green-600 hover:bg-green-500 text-white font-medium transition-colors disabled:opacity-50"
+          >
+            {loading ? "Guardando..." : "Guardar"}
+          </button>
+        </>
+      }
+    >
+      <form id="form-orders" onSubmit={handleSubmit} className="space-y-3">
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className={labelClass}>Provincia</label>
+            <input name="province" type="text" required value={formValue.province} onChange={handleChange} className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Localidad</label>
+            <input name="location" type="text" required value={formValue.location} onChange={handleChange} className={inputClass} />
+          </div>
+        </div>
+        <div>
+          <label className={labelClass}>Dirección de envío</label>
+          <input name="shippingAddress" type="text" required value={formValue.shippingAddress} onChange={handleChange} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Precio total</label>
+          <input name="totalPrice" type="number" value={formValue.totalPrice} onChange={handleChange} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Estado</label>
+          <select name="status" required value={formValue.status} onChange={handleChange} className={inputClass}>
+            <option value="">Estado del pedido</option>
+            <option value="PENDIENTE">Pendiente</option>
+            <option value="ENVIADO">Enviado</option>
+            <option value="ENTREGADO">Entregado</option>
+          </select>
+        </div>
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="checkbox"
+            name="activeOrder"
+            checked={formValue.activeOrder}
+            onChange={handleChange}
+            className="w-4 h-4 accent-green-500"
+          />
+          <span className="text-sm text-zinc-400">Pedido activo</span>
+        </label>
+      </form>
+    </Modal>
   );
 };
 

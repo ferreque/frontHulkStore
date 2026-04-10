@@ -1,65 +1,44 @@
-import React from "react";
 import hulklogo from "../../../assets/hulklogo.jpg";
-import { AiOutlineInstagram } from "react-icons/ai";
+import { AiOutlineInstagram, AiFillTwitterCircle } from "react-icons/ai";
 import { IoLogoFacebook } from "react-icons/io";
-import { AiFillTwitterCircle } from "react-icons/ai";
 
 export const HulkFooter = () => {
   return (
-    <div>
-      <footer className="footer-clase p-4">
-        <div className="container">
-          <div className="row text-center mt-2">
-            <div className="col-12 col-md-4 mb-4 mb-md-2 d-flex align-items-center justify-content-center">
-              <img src={hulklogo} className="marca-foot" alt="logo footer" />
-            </div>
-            <div className="col-12 col-md-4 mb-4 mb-md-2 d-flex align-items-center justify-content-center">
-              <a href="./error">
-                <i className="mx-2 text-muted" aria-hidden="true">
-                  <IoLogoFacebook className=" redes" style={{ fontSize: 40 }} />
-                </i>
-              </a>
-              <a href="./error">
-                <i className="mx-2 text-muted" aria-hidden="true">
-                  <AiOutlineInstagram
-                    className=" redes"
-                    style={{ fontSize: 40 }}
-                  />
-                </i>
-              </a>
-              <a href="./error">
-                <i className="mx-2 text-muted" aria-hidden="true">
-                  <AiFillTwitterCircle
-                    className=" redes"
-                    style={{ fontSize: 40 }}
-                  />
-                </i>
-              </a>
-            </div>
-            <div className="col-12 col-md-4 mb-4 mb-md-2 d-flex align-items-center justify-content-center">
-              <span>
-                +543815673097 <br />
-                Tucumán, Argentina <br />
-                hulkstore@gmail.com
-              </span>
-            </div>
+    <footer className="bg-zinc-900 border-t border-zinc-800 mt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="flex justify-center items-center">
+            <img
+              src={hulklogo}
+              className="w-20 rounded-xl opacity-80"
+              alt="HulkStore logo"
+            />
           </div>
-          <div className="row">
-            <div className="col-12 text-center mb-4">
-              <a href="./error" className="redes-nosotros text-muted">
-                SOBRE NOSOTROS
-              </a>
-            </div>
+          <div className="flex justify-center items-center gap-5">
+            <a href="#" aria-label="Facebook" className="text-zinc-600 hover:text-green-500 transition-colors">
+              <IoLogoFacebook size={30} />
+            </a>
+            <a href="#" aria-label="Instagram" className="text-zinc-600 hover:text-green-500 transition-colors">
+              <AiOutlineInstagram size={30} />
+            </a>
+            <a href="#" aria-label="Twitter" className="text-zinc-600 hover:text-green-500 transition-colors">
+              <AiFillTwitterCircle size={30} />
+            </a>
           </div>
-          <div className="row">
-            <div className="col-12 text-center">
-              <p className="small">
-                &copy; HulkStore 2022. Todos los derechos reservados.
-              </p>
-            </div>
+          <div className="flex justify-center items-center">
+            <address className="not-italic text-zinc-500 text-sm leading-relaxed">
+              +543815673097 <br />
+              Tucumán, Argentina <br />
+              hulkstore@gmail.com
+            </address>
           </div>
         </div>
-      </footer>
-    </div>
+        <div className="mt-8 pt-6 border-t border-zinc-800 text-center">
+          <p className="text-zinc-700 text-xs">
+            &copy; HulkStore 2024. Todos los derechos reservados.
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 };

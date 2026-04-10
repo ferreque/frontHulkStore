@@ -1,4 +1,4 @@
-const url = "https://hulk-store-back.vercel.app/api/auth/login";
+const url = `${import.meta.env.VITE_BACKEND_URL}auth/login`;
 
 export const postAuth = async (data) => {
   const respuesta = await fetch(url, {
@@ -9,6 +9,5 @@ export const postAuth = async (data) => {
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };

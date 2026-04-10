@@ -1,4 +1,8 @@
-const url = "https://hulk-store-back.vercel.app/api/categories/";
+import { useAuthStore } from '../store/authStore';
+
+const url = `${import.meta.env.VITE_BACKEND_URL}categories/`;
+
+const getToken = () => useAuthStore.getState().token;
 
 export const getCategories = async () => {
   const respuesta = await fetch(url, {
@@ -28,11 +32,10 @@ export const postCategories = async (data) => {
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };
 
@@ -42,11 +45,10 @@ export const putCategories = async (id, data) => {
     body: JSON.stringify(data),
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };
 
@@ -55,10 +57,9 @@ export const deleteCategories = async (id) => {
     method: "DELETE",
     headers: {
       "Content-type": "application/json; charset=UTF-8",
-      "x-token": JSON.parse(localStorage.getItem("auth")).token,
+      "x-token": getToken(),
     },
   });
   const datos = await respuesta.json();
-
   return datos;
 };
