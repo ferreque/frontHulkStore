@@ -105,9 +105,34 @@ const Login = () => {
           </div>
         </div>
 
-        <p className="text-center text-zinc-700 text-xs mt-5">
-          Demo — admin@admin.com · user@user.com · pass: 123456
-        </p>
+        <div className="mt-4 bg-zinc-900/70 border border-zinc-700/50 rounded-2xl p-4">
+          <p className="text-zinc-400 text-xs font-semibold uppercase tracking-widest mb-3 text-center">
+            Usuarios de prueba
+          </p>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              onClick={() => setformValue({ email: "admin@admin.com", password: "123456" })}
+              className="flex flex-col items-start bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 hover:border-green-600 rounded-xl px-3 py-2.5 transition-all cursor-pointer"
+            >
+              <span className="text-green-400 text-xs font-bold uppercase tracking-wide">Admin</span>
+              <span className="text-zinc-400 text-xs mt-0.5">admin@admin.com</span>
+              <span className="text-zinc-600 text-xs">pass: 123456</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setformValue({ email: "user@user.com", password: "123456" })}
+              className="flex flex-col items-start bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 hover:border-green-600 rounded-xl px-3 py-2.5 transition-all cursor-pointer"
+            >
+              <span className="text-blue-400 text-xs font-bold uppercase tracking-wide">Usuario</span>
+              <span className="text-zinc-400 text-xs mt-0.5">user@user.com</span>
+              <span className="text-zinc-600 text-xs">pass: 123456</span>
+            </button>
+          </div>
+          <p className="text-zinc-600 text-xs text-center mt-2">
+            Click en cualquiera para autocompletar el formulario
+          </p>
+        </div>
       </div>
     </div>
   );

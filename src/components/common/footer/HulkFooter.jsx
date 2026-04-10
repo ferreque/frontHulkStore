@@ -15,27 +15,27 @@ export const HulkFooter = () => {
             />
           </div>
           <div className="flex justify-center items-center gap-5">
-            <a href="#" aria-label="Facebook" className="text-zinc-600 hover:text-green-500 transition-colors">
+            <a href="*" aria-label="Facebook" className="text-zinc-600 hover:text-green-500 transition-colors">
               <IoLogoFacebook size={30} />
             </a>
-            <a href="#" aria-label="Instagram" className="text-zinc-600 hover:text-green-500 transition-colors">
+            <a href="*" aria-label="Instagram" className="text-zinc-600 hover:text-green-500 transition-colors">
               <AiOutlineInstagram size={30} />
             </a>
-            <a href="#" aria-label="Twitter" className="text-zinc-600 hover:text-green-500 transition-colors">
+            <a href="*" aria-label="Twitter" className="text-zinc-600 hover:text-green-500 transition-colors">
               <AiFillTwitterCircle size={30} />
             </a>
           </div>
           <div className="flex justify-center items-center">
             <address className="not-italic text-zinc-500 text-sm leading-relaxed">
-              +543815673097 <br />
-              Tucumán, Argentina <br />
-              hulkstore@gmail.com
+              +34 654 321 098 <br />
+              Valencia, España <br />
+              hulkstore@hulkstore.com
             </address>
           </div>
         </div>
         <div className="mt-8 pt-6 border-t border-zinc-800 text-center">
           <p className="text-zinc-700 text-xs">
-            &copy; HulkStore 2024. Todos los derechos reservados.
+            &copy; HulkStore 2026. Todos los derechos reservados.
           </p>
         </div>
       </div>
