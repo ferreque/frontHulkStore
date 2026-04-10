@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# HulkStore — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+E-commerce de coleccionables Marvel construido con React 19 y Vite.
 
-## Available Scripts
+## Stack
 
-In the project directory, you can run:
+- **React 19** — UI
+- **Vite 6** — bundler y dev server
+- **TailwindCSS 4** — estilos
+- **Zustand** — estado global (auth + carrito)
+- **React Router DOM 7** — navegación
+- **SweetAlert2** — notificaciones
 
-### `npm start`
+## Funcionalidades
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Catálogo de productos con filtro por categorías
+- Carrito de compras persistente
+- Autenticación con JWT (login / registro)
+- Panel de administración (solo rol `ADMIN_ROLE`)
+  - Gestión de usuarios, productos, categorías y pedidos
+- Rutas protegidas por rol
+- Diseño responsive dark mode
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Usuarios de prueba
 
-### `npm test`
+| Rol   | Email           | Contraseña |
+|-------|-----------------|------------|
+| Admin | admin@admin.com | 123456     |
+| User  | user@user.com   | 123456     |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Instalación local
 
-### `npm run build`
+```bash
+npm install
+npm run dev
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Crea un archivo `.env` en la raíz:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```env
+VITE_BACKEND_URL=http://localhost:8080/api/
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Scripts
 
-### `npm run eject`
+| Comando         | Descripción                        |
+|-----------------|------------------------------------|
+| `npm run dev`   | Servidor de desarrollo en :5173    |
+| `npm run build` | Build de producción en `/dist`     |
+| `npm run preview` | Preview del build de producción  |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## CI/CD
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **CI** (`ci.yml`) — corre en PRs y push a `develop`: instala dependencias y compila
+- **CD** — Vercel despliega automáticamente en cada push a `main`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Deploy
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Hosteado en **Vercel**. La variable `VITE_BACKEND_URL` en producción apunta al backend en Vercel.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Backend: [hulkStoreBack](https://github.com/ferreque/hulkStoreBack)
